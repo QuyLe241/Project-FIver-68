@@ -6,7 +6,8 @@ const RegisterPage = () => {
     <div className="container">
       <div className="flex">
         <div className="w-1/2">
-          <img src="../../../public/RegisterImg.png" alt="" />
+          {/* <img src="../../../public/RegisterImg.png" alt="" /> */}
+          <img src="../../Img/RegisterImg.png" alt="" />
         </div>
         <div className="w-1/2">
           <FormRegister />

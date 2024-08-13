@@ -1,10 +1,10 @@
 import { useState } from 'react'
+import UseRoutesCustom from './hooks/UseRoutesCustom'
 
 
 function App() {
-  return<>
-      <h1 className='text-red-400 text-center'>eee</h1>
-  </>
+  const routes = UseRoutesCustom();
+  return routes;
 }
 
 export default App

@@ -1,6 +1,6 @@
 export const pathDefault = {
     homePage: "/",
-    register: "dang-ký",
+    register: "dang-ky",
     login: "dang-nhap",
     
 }

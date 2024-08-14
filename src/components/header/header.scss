@@ -6,3 +6,17 @@ header .ant-dropdown-open svg {
 header .ant-dropdown-trigger svg {
     transition: all 0.5s;
 }
+
+.header_content .header_navigation .btn_login:hover {
+    background-color: rgb(104, 226, 104);
+    color: white;
+    transition: all 0.5s;
+}
+
+.header_content .header_navigation .btn_register:hover {
+    // background-color: white;
+    background-color: rgb(18, 175, 18);
+    // color: rgb(83, 197, 83);
+    // border: rgb(83, 197, 83) solid 1px;
+    transition: all 0.5s;
+}

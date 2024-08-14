@@ -88,12 +88,12 @@ const Header = () => {
             <LinkCustom
               content={"Đăng nhập"}
               to={pathDefault.login}
-              className={"border border-green-500 text-green-500"}
+              className={"border border-green-500 text-green-500 btn_login"}
             />
             <LinkCustom
               content={"Đăng ký"}
               to={pathDefault.register}
-              className={"border bg-green-500 text-white"}
+              className={"border bg-green-500 text-white btn_register"}
             />
             {/* <Link to={"/"}>Đăng ký</Link>
             <Link to={"/"}>Đăng nhập</Link> */}

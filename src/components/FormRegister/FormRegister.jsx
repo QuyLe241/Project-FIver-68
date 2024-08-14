@@ -39,22 +39,22 @@ const FormRegister = () => {
         .matches(/^[A-Za-zÀ-ỹà-ỹ]+$/, "Vui lòng nhập không có số"),
       email: yup
         .string()
-        .required("Vui lòng không bỏ trống")
-        .email("Nhập đúng định dạng email"),
+        .email("Nhập đúng định dạng email")
+        .required("Vui lòng không bỏ trống"),
       passWord: yup
         .string()
-        .required("Vui lòng không bỏ trống")
         .matches(
           /^(?=.*[A-Z])(?=.*\d).+$/,
           "Vui lòng nhập ít nhất một chữ cái và một chữ số"
-        ),
+        )
+        .required("Vui lòng không bỏ trống"),
       phone: yup
         .string()
-        .required("không bỏ trống")
         .matches(
           /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
           "Vui lòng nhập đúng số điện thoại"
-        ),
+        )
+        .required("Vui lòng không bỏ trống"),
       birthday: yup.string().required("Vui lòng không bỏ trống"),
       gender: yup.string().required("Vui lòng không bỏ trống"),
     }),
@@ -78,9 +78,9 @@ const FormRegister = () => {
             value={values.name}
             onBlur={handleBlur}
             onChange={handleChange}
-            touched={touched}
+            touched={touched.name}
             handleSubmit={handleSubmit}
-            // error={errors}
+            error={errors.name}
           />
           <InputCustom
             contentLable={"Email"}
@@ -90,8 +90,9 @@ const FormRegister = () => {
             value={values.email}
             onBlur={handleBlur}
             onChange={handleChange}
-            touched={touched}
+            touched={touched.email}
             handleSubmit={handleSubmit}
+            error={errors.email}
           />
           <InputCustom
             contentLable={"Mật khẩu"}
@@ -102,8 +103,9 @@ const FormRegister = () => {
             value={values.passWord}
             onBlur={handleBlur}
             onChange={handleChange}
-            touched={touched}
+            touched={touched.passWord}
             handleSubmit={handleSubmit}
+            error={errors.passWord}
           />
           <InputCustom
             contentLable={"Số điện thoại"}
@@ -113,8 +115,9 @@ const FormRegister = () => {
             value={values.phone}
             onBlur={handleBlur}
             onChange={handleChange}
-            touched={touched}
+            touched={touched.phone}
             handleSubmit={handleSubmit}
+            error={errors.phone}
           />
           <div className="w-1/2 p-3">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
@@ -127,6 +130,9 @@ const FormRegister = () => {
               }}
               format={"DD-MM-YYYY"}
             />
+            {errors.birthday && touched.birthday ? (
+              <p className="text-red-500">{errors.birthday}</p>
+            ) : null}
           </div>
           <div className="w-1/2 p-3">
             <div>
@@ -146,6 +152,9 @@ const FormRegister = () => {
                 <option value="US">Nam</option>
                 <option value="CA">Nữ</option>
               </select>
+              {errors.gender && touched.gender ? (
+                <p className="text-red-500">{errors.gender}</p>
+              ) : null}
             </div>
           </div>
           <div className="w-full p-3">

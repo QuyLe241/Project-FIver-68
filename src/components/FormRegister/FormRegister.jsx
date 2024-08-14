@@ -1,17 +1,73 @@
 import React from "react";
 import InputCustom from "../Input/InputCustom";
 import { DatePicker, Space } from "antd";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { notiValidation } from "../../common/notiValidation";
+import Password from "antd/es/input/Password";
 
 const FormRegister = () => {
+  //  setFieldValue : thuộc tính thay thế khi inout không có name
+  //    các trang web sử dụng chung form đăng ký , đăng nhập:
+  //  để không bị vướn lại ở bước validation email, phone, date,..
+  //  người ta sẽ tạo ra một biến để lưu validation và sử dụng điều kiện để kiểm tra đăng ký và đăng nhập
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    handleReset,
+    handleSubmit,
+    touched,
+    errors,
+    setFieldValue,
+  } = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      passWord: "",
+      phone: "",
+      birthday: "",
+      gender: "",
+    },
+    onSubmit: (values) => {
+      console.log(values);
+    },
+    validationSchema: yup.object({
+      name: yup
+        .string()
+        .required(notiValidation.empty)
+        .matches(/^[A-Za-zÀ-ỹà-ỹ]+$/, "Vui lòng nhập không có số"),
+      email: yup
+        .string()
+        .required("Vui lòng không bỏ trống")
+        .email("Nhập đúng định dạng email"),
+      passWord: yup
+        .string()
+        .required("Vui lòng không bỏ trống")
+        .matches(
+          /^(?=.*[A-Z])(?=.*\d).+$/,
+          "Vui lòng nhập ít nhất một chữ cái và một chữ số"
+        ),
+      phone: yup
+        .string()
+        .required("không bỏ trống")
+        .matches(
+          /^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$/,
+          "Vui lòng nhập đúng số điện thoại"
+        ),
+      birthday: yup.string().required("Vui lòng không bỏ trống"),
+      gender: yup.string().required("Vui lòng không bỏ trống"),
+    }),
+  });
   return (
-    <div>
+    <div className="flex justify-center flex-col items-center h-full">
       <h1
         className="text-center"
         style={{ fontSize: "25px", fontWeight: "700" }}
       >
         Đăng ký
       </h1>
-      <form action="">
+      <form action="" onSubmit={handleSubmit}>
         {/*       flex-wrap : khi các phần tử vượt quá 100% sẽ tự động xuông dòng */}
         <div className="flex flex-wrap">
           <InputCustom
@@ -19,31 +75,58 @@ const FormRegister = () => {
             name={"name"}
             placeHolder={"Nhập tên của bạn"}
             classWrapper={"w-1/2 p-3"}
+            value={values.name}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            touched={touched}
+            handleSubmit={handleSubmit}
+            // error={errors}
           />
           <InputCustom
             contentLable={"Email"}
             name={"email"}
             placeHolder={"Nhập email của bạn"}
             classWrapper={"w-1/2 p-3"}
+            value={values.email}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            touched={touched}
+            handleSubmit={handleSubmit}
           />
           <InputCustom
             contentLable={"Mật khẩu"}
-            name={"password"}
+            name={"passWord"}
             placeHolder={"Nhập mật khẩu"}
             classWrapper={"w-full p-3"}
-            type="password"
+            type="passWord"
+            value={values.passWord}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            touched={touched}
+            handleSubmit={handleSubmit}
           />
           <InputCustom
             contentLable={"Số điện thoại"}
             name={"phone"}
             placeHolder={"Nhập số điện thoại của bạn"}
             classWrapper={"w-full p-3"}
+            value={values.phone}
+            onBlur={handleBlur}
+            onChange={handleChange}
+            touched={touched}
+            handleSubmit={handleSubmit}
           />
           <div className="w-1/2 p-3">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Ngày sinh
             </label>
-            <DatePicker />
+            <DatePicker
+              className="w-full"
+              onChange={(dayjs, dayString) => {
+                setFieldValue("birthday", dayString);
+              }}
+              format={"DD-MM-YYYY"}
+            />
           </div>
           <div className="w-1/2 p-3">
             <div>
@@ -51,16 +134,30 @@ const FormRegister = () => {
                 Giới tính
               </label>
               <select
-                id="countries"
+                name="gender"
+                id=""
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500
                  focus:border-blue-500 block w-full p-2.5 
                  dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                value={values.gender}
+                onChange={handleChange}
               >
-                <option selected>Chọn giới tính</option>
+                <option value="">Chọn giới tính</option>
                 <option value="US">Nam</option>
                 <option value="CA">Nữ</option>
               </select>
             </div>
+          </div>
+          <div className="w-full p-3">
+            <button
+              type="submit"
+              onSubmit={(e) => {
+                e.target.value;
+              }}
+              className="bg-black text-white rounded-lg w-full py-3 px-6"
+            >
+              Đăng ký
+            </button>
           </div>
         </div>
       </form>

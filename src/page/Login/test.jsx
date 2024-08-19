@@ -11,13 +11,12 @@ const LoginPage = () => {
   const { values, handleSubmit, handleChange } = useFormik({
     initialValues: {
       email: "",
-      passWord: "",
+      password: "",
     },
-    onSubmit: (values) => {
-      console.log(values);
+    onsubmit: (Values) => {
+      console.log(Values);
     },
   });
-
   return (
     <div>
       <div className="container">
@@ -46,7 +45,7 @@ const LoginPage = () => {
                 contentLable={"Mật khẩu"}
                 placeHolder={"Nhập mật khẩu"}
                 type="password"
-                name="passWord"
+                name="password"
                 onChange={handleChange}
                 value={values.passWord}
                 handleSubmit={handleSubmit}

@@ -7,7 +7,8 @@ import { notiValidation } from "../../common/notiValidation";
 // import Password from "antd/es/input/Password";
 import { authService } from "../../services/auth.service";
 import { NotificationContext } from "../../App";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import LinkCustom from "../LinkCustom/LinkCustom";
 
 const FormRegister = () => {
   // const notificationValue = useContext(NotificationContext);
@@ -201,6 +202,14 @@ const FormRegister = () => {
             >
               Đăng ký
             </button>
+            <Link className="my-3 text-blue-800 hover:text-blue-500">
+              Nhấn vào đây để đăng nhập nếu bạn đã có tài khoản.
+            </Link>
+            <div className="">
+              <Link className="my-3 text-blue-900 hover:text-blue-500">
+                Trở về trang chủ.
+              </Link>
+            </div>
           </div>
         </div>
       </form>

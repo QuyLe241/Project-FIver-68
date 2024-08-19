@@ -4,7 +4,7 @@ import axios from "axios";
 //      baseURL : đường dẫn api tổng của trang web
 //      timeOut : thời gian chờ của người dùng , quá thời gian chờ sẽ báo lỗi cho người dùng
 
-const http = axios.create({
+export const http = axios.create({
     baseURL: "https://fiverrnew.cybersoft.edu.vn/api",
     timeout: 20000,
     headers: {

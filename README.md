@@ -10,6 +10,7 @@
 - Thư viện formik và yup để quản lí form và validation
 - Thư viên antdesign quản lí IU
 - Thư viện animation : lottifiles. B1(2:20:00 và 2:30:00)
+- Thư viện Toastify 10.0.5
 
       Các thư mục trong dự án
 
@@ -26,3 +27,4 @@
       Cấu hình axios
 
 - file: services/config
+- file xác thực auth: services

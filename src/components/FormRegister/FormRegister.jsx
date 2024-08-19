@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import InputCustom from "../Input/InputCustom";
 import { DatePicker, Space } from "antd";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { notiValidation } from "../../common/notiValidation";
-import Password from "antd/es/input/Password";
+// import Password from "antd/es/input/Password";
+import { authService } from "../../services/auth.service";
+import { NotificationContext } from "../../App";
+import { useNavigate } from "react-router-dom";
 
 const FormRegister = () => {
+  // const notificationValue = useContext(NotificationContext);
+  // console.log(notificationValue);
+
+  const { handleNotification } = useContext(NotificationContext);
   //  setFieldValue : thuộc tính thay thế khi inout không có name
   //    các trang web sử dụng chung form đăng ký , đăng nhập:
   //  để không bị vướn lại ở bước validation email, phone, date,..
   //  người ta sẽ tạo ra một biến để lưu validation và sử dụng điều kiện để kiểm tra đăng ký và đăng nhập
+
+  //    chuyển hướng người dùng khi đăng ký thành công
+  const navigate = useNavigate();
   const {
     values,
     handleBlur,
@@ -20,6 +30,7 @@ const FormRegister = () => {
     touched,
     errors,
     setFieldValue,
+    resetForm,
   } = useFormik({
     initialValues: {
       name: "",
@@ -31,12 +42,35 @@ const FormRegister = () => {
     },
     onSubmit: (values) => {
       console.log(values);
+      //  sử dụng api
+      //  kiểm tra devtool chrome tại network: status 200 or 201 là thành công
+      authService
+        .signUp({
+          ...values,
+          gender: values.gender == "Nam" ? true : false,
+        })
+        .then((res) => {
+          console.log(res);
+          //    thông báo cho người dùng khi tạo tài khoản thành công
+          handleNotification(
+            "Bạn đã tạo tài khoản thành công . Bạn đang được chuyển hướng đến trang đăng nhập",
+            "success"
+          );
+          //    chuyển hướng người dùng
+          setTimeout(() => {
+            navigate("/dang-nhap");
+          }, 2000);
+        })
+        .catch((err) => {
+          console.log(err);
+          handleNotification(err.response.data.content, "error");
+        });
     },
     validationSchema: yup.object({
       name: yup
         .string()
         .required(notiValidation.empty)
-        .matches(/^[A-Za-zÀ-ỹà-ỹ]+$/, "Vui lòng nhập không có số"),
+        .matches(/^[A-Za-zÀ-ỹà-ỹ\s]+$/, "Vui lòng nhập không có số"),
       email: yup
         .string()
         .email("Nhập đúng định dạng email")
@@ -45,7 +79,7 @@ const FormRegister = () => {
         .string()
         .matches(
           /^(?=.*[A-Z])(?=.*\d).+$/,
-          "Vui lòng nhập ít nhất một chữ cái và một chữ số"
+          "Vui lòng nhập ít nhất một chữ cái thường, in hoa và một chữ số"
         )
         .required("Vui lòng không bỏ trống"),
       phone: yup

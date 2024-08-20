@@ -11,6 +11,7 @@ const InputCustom = ({
   onBlur,
   error,
   touched,
+  isValid,
 }) => {
   return (
     <div className={classWrapper}>
@@ -32,6 +33,10 @@ const InputCustom = ({
       />
       {/*     kiểm tra dùng toán tử điều kiện để kiểm tra: nếu error với touced được truyền vào thì hiển thị thông báo lỗi */}
       {error && touched && <p className="text-red-600">{error}</p>}
+      {/*     Hiển thị thông báo khi dữ liệu chính xác */}
+      {!error && isValid && touched && (
+        <p className="text-green-500">Thông tin hợp lệ</p>
+      )}
     </div>
   );
 };

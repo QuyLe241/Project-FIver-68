@@ -6,16 +6,43 @@ import { pathDefault } from "../../common/path";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { Value } from "sass";
+import { useState } from "react";
 
 const LoginPage = () => {
-  const { values, handleSubmit, handleChange } = useFormik({
+  //    sử dụng state để kiểm tra tra dữ liệu hợp lệ
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const {
+    values,
+    handleSubmit,
+    handleChange,
+    errors,
+    touched,
+    handleBlur,
+    isValid,
+  } = useFormik({
     initialValues: {
       email: "",
       passWord: "",
     },
     onSubmit: (values) => {
+      //    kiểm tra dữ liệu đã thành công
+      setIsSubmitted(true);
       console.log(values);
     },
+    validationSchema: yup.object({
+      email: yup
+        .string()
+        .resolve("Hợp lệ")
+        .required("Vui lòng không bỏ trống")
+        .email("Vui lòng nhập đúng định dạng email"),
+      passWord: yup
+        .string()
+        .resolve("Hợp lệ")
+        .defined("Hợp lệ")
+        .required("Vui lòng không bỏ trống")
+        .min(6, "Nhập tối thiểu 6 ký tự")
+        .max(10, "Nhập tối đa 10 ký tự"),
+    }),
   });
 
   return (
@@ -41,7 +68,12 @@ const LoginPage = () => {
                 onChange={handleChange}
                 value={values.email}
                 handleSubmit={handleSubmit}
+                onBlur={handleBlur}
+                touched={touched.email}
+                error={errors.email}
+                isValid={!isValid.email}
               />
+
               <InputCustom
                 contentLable={"Mật khẩu"}
                 placeHolder={"Nhập mật khẩu"}
@@ -50,6 +82,10 @@ const LoginPage = () => {
                 onChange={handleChange}
                 value={values.passWord}
                 handleSubmit={handleSubmit}
+                onBlur={handleBlur}
+                error={errors.passWord}
+                touched={touched.passWord}
+                isValid={!isValid.passWord}
               />
               <div className="mt-5">
                 <button

@@ -1,14 +1,18 @@
 import React from "react";
 import ImgLogin from "../../Img/LoginImg.png";
 import InputCustom from "../../components/Input/InputCustom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { pathDefault } from "../../common/path";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import { Value } from "sass";
 import { useState } from "react";
+import { authService } from "../../services/auth.service";
+import { setLocalStorage } from "../../utils/utils";
 
 const LoginPage = () => {
+  const Navigate = useNavigate();
+
   //    sử dụng state để kiểm tra tra dữ liệu hợp lệ
   const [isSubmitted, setIsSubmitted] = useState(false);
   const {
@@ -24,10 +28,23 @@ const LoginPage = () => {
       email: "",
       passWord: "",
     },
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       //    kiểm tra dữ liệu đã thành công
       setIsSubmitted(true);
       console.log(values);
+      //  gọi api
+      //  - sử dụng try catch : ở trường hợp có nhiều sự kiện xảy ra ở try(tạo ra nhiều sự kiện tỏng try mà không cần phải .then nhiều lần)
+      //  - sử dụng .then .catch : ở trường hợp có 1 sự kiện xảy ra ở .then
+      //    lưu ý sử dụng : try catch . cần thêm async và await
+      try {
+        const result = await authService.signIn(values);
+        console.log(result);
+        //  luư trữ dữ liệu xuống localStorage
+        setLocalStorage("user", result.data.content);
+        //  chuyển hướng người dùng khi đăng nhập thành công
+      } catch (err) {
+        console.log(err);
+      }
     },
     validationSchema: yup.object({
       email: yup
@@ -71,7 +88,7 @@ const LoginPage = () => {
                 onBlur={handleBlur}
                 touched={touched.email}
                 error={errors.email}
-                isValid={!isValid.email}
+                // isValid={!isValid.email}
               />
 
               <InputCustom

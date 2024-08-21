@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import ImgLogin from "../../Img/LoginImg.png";
 import InputCustom from "../../components/Input/InputCustom";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,9 +9,17 @@ import { Value } from "sass";
 import { useState } from "react";
 import { authService } from "../../services/auth.service";
 import { setLocalStorage } from "../../utils/utils";
+import { useDispatch } from "react-redux";
+import { setValueUser } from "../../redux/authSlice";
+import { NotificationContext } from "../../App";
 
 const LoginPage = () => {
+  //    Sử dụng redeux
   const Navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  //    sử dụng useContext để gọi notification và sử dụng
+  const { handleNotification } = useContext(NotificationContext);
 
   //    sử dụng state để kiểm tra tra dữ liệu hợp lệ
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -41,9 +49,20 @@ const LoginPage = () => {
         console.log(result);
         //  luư trữ dữ liệu xuống localStorage
         setLocalStorage("user", result.data.content);
+        //    bắn setValueUser lên cho redux xử lý
+        dispatch(setValueUser(result.data.content));
         //  chuyển hướng người dùng khi đăng nhập thành công
+        handleNotification(
+          "Đăng nhập thành công bạn sẽ được chuyển đến trang chủ",
+          "success"
+        );
+        setTimeout(() => {
+          Navigate("/");
+        }, 2000);
       } catch (err) {
         console.log(err);
+        //    Đăng nhập thất bại
+        handleNotification(err.response.data.content, "error");
       }
     },
     validationSchema: yup.object({

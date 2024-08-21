@@ -1,7 +1,8 @@
 export const setLocalStorage = (key, value) => {
   //      chuyển đổi dữ liệu sang Json để lưu xuống local
   const localString = JSON.stringify(value);
-  localStorage.setItem(key, value);
+  //    gọi đến localStorage và setItem: key định dạng value và localString là value được truyền vào
+  localStorage.setItem(key, localString);
 };
 
 export const getLocalStorage = (key) => {

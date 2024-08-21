@@ -202,11 +202,14 @@ const FormRegister = () => {
             >
               Đăng ký
             </button>
-            <Link className="my-3 text-blue-800 hover:text-blue-500">
+            <Link
+              to={"/dang-nhap"}
+              className="my-3 text-blue-800 hover:text-blue-500"
+            >
               Nhấn vào đây để đăng nhập nếu bạn đã có tài khoản.
             </Link>
             <div className="">
-              <Link className="my-3 text-blue-900 hover:text-blue-500">
+              <Link to={"/"} className="my-3 text-blue-900 hover:text-blue-500">
                 Trở về trang chủ.
               </Link>
             </div>

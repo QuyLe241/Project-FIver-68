@@ -131,13 +131,16 @@ const LoginPage = () => {
                   Đăng Nhập
                 </button>
                 <Link
-                  to="dang-ky"
+                  to="/dang-ky"
                   className="my-3 text-blue-800 hover:text-blue-500"
                 >
                   Nhấn vào đây để đăng ký nếu bạn chưa có tài khoản.
                 </Link>
                 <div className="">
-                  <Link className="my-3 text-blue-900 hover:text-blue-500">
+                  <Link
+                    to={"/"}
+                    className="my-3 text-blue-900 hover:text-blue-500"
+                  >
                     Trở về trang chủ.
                   </Link>
                 </div>

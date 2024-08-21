@@ -65,6 +65,7 @@ const FormRegister = () => {
         .catch((err) => {
           console.log(err);
           handleNotification(err.response.data.content, "error");
+          // setTimeout(() => {}, 1000);
         });
     },
     validationSchema: yup.object({

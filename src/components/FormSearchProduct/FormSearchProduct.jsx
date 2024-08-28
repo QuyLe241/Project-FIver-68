@@ -109,7 +109,7 @@ const FormSearchProduct = () => {
               type="text"
               onChange={handleChange}
               value={valueSearch}
-              placeholder="Nhập vào công việc bạn muốn tìm"
+              placeholder="Nhập vào công việc bạn muốn tìm(english)"
               className="flex-1 focus:border-none focus:outline-none"
             />
             <button type="submit" className="py-2">

@@ -4,12 +4,19 @@ import UserTemplate from "../templates/UserTemplate/UserTemplate";
 import { pathDefault } from "../common/path";
 import RegisterPage from "../page/Register/RegisterPage";
 import LoginPage from "../page/Login/LoginPage";
+import ListJobPage from "../page/ListJobPage/ListJobPage";
 
 const UseRoutesCustom = () => {
   const routes = useRoutes([
     {
       path: pathDefault.homePage,
       element: <UserTemplate />,
+      children: [
+        {
+          path: pathDefault.listJob,
+          element: <ListJobPage />,
+        },
+      ],
     },
     {
       path: pathDefault.register,

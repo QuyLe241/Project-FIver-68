@@ -60,7 +60,7 @@ const Header = () => {
   return (
     //    chỉnh container tại file configTailwind
     <header className="py-5">
-      <div className="container">
+      <div className="container mx-auto px-2">
         <div className="header_content flex items-center justify-between">
           <div className="header_logo flex items-center space-x-3">
             {/*   Sử dụng thẻ svg bằng cách tạo ra component chứa thẻ svg và gọi đến component header */}
@@ -79,7 +79,7 @@ const Header = () => {
             >
               <a onClick={(e) => e.preventDefault()}>
                 <Space>
-                  Hover me
+                  Click me
                   <DownOutlined />
                 </Space>
               </a>

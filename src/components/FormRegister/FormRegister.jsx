@@ -42,7 +42,7 @@ const FormRegister = () => {
       gender: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
       //  sử dụng api
       //  kiểm tra devtool chrome tại network: status 200 or 201 là thành công
       authService

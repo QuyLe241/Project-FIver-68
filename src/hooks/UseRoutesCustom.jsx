@@ -5,6 +5,8 @@ import { pathDefault } from "../common/path";
 import RegisterPage from "../page/Register/RegisterPage";
 import LoginPage from "../page/Login/LoginPage";
 import ListJobPage from "../page/ListJobPage/ListJobPage";
+import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
+import AdminLogin from "../page/AdminLogin/AdminLogin";
 
 const UseRoutesCustom = () => {
   const routes = useRoutes([
@@ -25,6 +27,14 @@ const UseRoutesCustom = () => {
     {
       path: pathDefault.login,
       element: <LoginPage />,
+    },
+    {
+      path: pathDefault.adminTemplate,
+      element: <AdminTemplate />,
+    },
+    {
+      path: pathDefault.adminLogin,
+      element: <AdminLogin />,
     },
   ]);
   return routes;

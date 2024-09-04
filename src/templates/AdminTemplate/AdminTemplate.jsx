@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -7,8 +7,30 @@ import {
   VideoCameraOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
+import { getLocalStorage } from "../../utils/utils";
+import { useDispatch } from "react-redux";
+import { getValueUserApi } from "../../redux/nguoiDungSlice";
+import { Link, Outlet } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
+
 const AdminTemplate = () => {
+  //  bắn tín hiệu lên store redux
+  const dispatch = useDispatch();
+
+  // Trước khi cho người dùng vào trang admin  :  kiểm tra người dùng có phải là admin không
+  useEffect(() => {
+    let dataLocal = getLocalStorage("user");
+    console.log(dataLocal);
+    dataLocal.user.role != "ADMIN"
+      ? (window.location.href = "https://google.com")
+      : null;
+  }, []);
+
+  //    bắn tín hiệu lên store để lấy api về khi trang web load xong
+  useEffect(() => {
+    dispatch(getValueUserApi());
+  }, []);
+
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -25,17 +47,17 @@ const AdminTemplate = () => {
             {
               key: "1",
               icon: <UserOutlined />,
-              label: "nav 1",
+              label: <Link>Người dùng</Link>,
             },
             {
               key: "2",
               icon: <VideoCameraOutlined />,
-              label: "nav 2",
+              label: <Link>Công việc</Link>,
             },
             {
               key: "3",
               icon: <UploadOutlined />,
-              label: "nav 3",
+              label: <Link>Thuê công việc</Link>,
             },
           ]}
         />
@@ -67,7 +89,7 @@ const AdminTemplate = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Outlet />
         </Content>
       </Layout>
     </Layout>

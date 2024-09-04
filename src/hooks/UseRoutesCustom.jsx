@@ -7,6 +7,7 @@ import LoginPage from "../page/Login/LoginPage";
 import ListJobPage from "../page/ListJobPage/ListJobPage";
 import AdminTemplate from "../templates/AdminTemplate/AdminTemplate";
 import AdminLogin from "../page/AdminLogin/AdminLogin";
+import ManagerUser from "../page/ManagerUser/ManagerUser";
 
 const UseRoutesCustom = () => {
   const routes = useRoutes([
@@ -31,6 +32,14 @@ const UseRoutesCustom = () => {
     {
       path: pathDefault.adminTemplate,
       element: <AdminTemplate />,
+      children: [
+        {
+          // path: pathDefault.managerUser,
+          index: true,
+          element: <ManagerUser />,
+        },
+        {},
+      ],
     },
     {
       path: pathDefault.adminLogin,

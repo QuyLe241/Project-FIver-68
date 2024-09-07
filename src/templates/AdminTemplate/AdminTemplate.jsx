@@ -27,9 +27,10 @@ const AdminTemplate = () => {
   }, []);
 
   //    bắn tín hiệu lên store để lấy api về khi trang web load xong
-  useEffect(() => {
-    dispatch(getValueUserApi());
-  }, []);
+  //    chuyển đến ManagerUser
+  // useEffect(() => {
+  //   dispatch(getValueUserApi());
+  // }, []);
 
   const [collapsed, setCollapsed] = useState(false);
   const {
